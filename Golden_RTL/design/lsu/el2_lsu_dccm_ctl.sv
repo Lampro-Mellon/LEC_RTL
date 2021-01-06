@@ -123,7 +123,7 @@ module el2_lsu_dccm_ctl
 );
 
 
-   localparam DCCM_WIDTH_BITS = $clog2(DCCM_BYTE_WIDTH);
+   //localparam DCCM_WIDTH_BITS = $clog2(DCCM_BYTE_WIDTH);
 
    logic                           lsu_dccm_rden_d, lsu_dccm_wren_d;
    logic                           ld_single_ecc_error_lo_r, ld_single_ecc_error_hi_r;
