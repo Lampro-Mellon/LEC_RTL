@@ -20,7 +20,8 @@
 //                Wrapper module for JTAG_TAP and DMI synchronizer
 //
 //-------------------------------------------------------------------------------------
-
+// `include "rvjtag_tap.sv"
+// `include "dmi_jtag_to_core_sync.sv"
 module dmi_wrapper(
 
   // JTAG signals

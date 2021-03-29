@@ -1,13 +1,12 @@
 typedef struct packed {
-                       logic [1:0] rv_i_valid_ip;
-                       logic [31:0] rv_i_insn_ip;
-                       logic [31:0] rv_i_address_ip;
-                       logic [1:0] rv_i_exception_ip;
-                       logic [4:0] rv_i_ecause_ip;
-                       logic [1:0] rv_i_interrupt_ip;
-                       logic [31:0] rv_i_tval_ip;
+                       logic  trace_rv_i_valid_ip;
+                       logic [31:0] trace_rv_i_insn_ip;
+                       logic [31:0] trace_rv_i_address_ip;
+                       logic  trace_rv_i_exception_ip;
+                       logic [4:0] trace_rv_i_ecause_ip;
+                       logic  trace_rv_i_interrupt_ip;
+                       logic [31:0] trace_rv_i_tval_ip;
                        } el2_trace_pkt_t;
-
 
 typedef enum logic [3:0] {
                           NULL     = 4'b0000,
@@ -29,9 +28,9 @@ typedef enum logic [3:0] {
                           } el2_inst_pkt_t;
 
 typedef struct packed {
-                       logic valid;
+                       logic valid; //9
                        logic wb;
-                       logic [2:0] tag;
+                       logic [2:0] tag;//7
                        logic [4:0] rd;
                        } el2_load_cam_pkt_t;
 
@@ -62,45 +61,50 @@ typedef struct packed {
                        } el2_br_tlu_pkt_t;
 
 typedef struct packed {
-                       logic misp;
+                       logic misp; //55
                        logic ataken;
                        logic boffset;
                        logic pc4;
-                       logic [1:0] hist;
-                       logic [11:0] toffset;
-                       logic valid;
+                       logic [1:0] hist; //51
+                       logic [11:0] toffset; //49
+                       logic valid; //37
                        logic br_error;
-                       logic br_start_error;
-                       logic [31:1] prett;
+                       logic br_start_error; //35
                        logic pcall;
-                       logic pret;
                        logic pja;
                        logic way;
+                       logic pret;
+                       // for power use the pret bit to clock the prett field
+                       logic [31:1] prett;
                        } el2_predict_pkt_t;
 
 typedef struct packed {
-                       logic legal;
-                       logic icaf;
-                       logic icaf_f1;
-                       logic [1:0] icaf_type;
+                       // unlikely to change
+                       logic icaf; //16
+                       logic icaf_second;
+                       logic [1:0] icaf_type; //14
                        logic fence_i;
-                       logic [3:0] i0trigger;
-                       el2_inst_pkt_t pmu_i0_itype;        // pmu - instruction type
-                       logic pmu_i0_br_unpred;     // pmu
-                       logic pmu_divide;
+                       logic [3:0] i0trigger; //11
+                       logic pmu_i0_br_unpred;   //7   // pmu
+                       logic pmu_divide; //6
+                       // likely to change
+                       logic legal; //5
                        logic pmu_lsu_misaligned;
+                       el2_inst_pkt_t pmu_i0_itype;  //3      // pmu - instruction type
                        } el2_trap_pkt_t;
 
 typedef struct packed {
-                       logic [4:0] i0rd;
-                       logic i0load;
-                       logic i0store;
-                       logic i0div;
-                       logic i0v;
-                       logic i0valid;
+                       // unlikely to change
+                       logic i0div; //23
                        logic csrwen;
                        logic csrwonly;
-                       logic [11:0] csrwaddr;
+                       logic [11:0] csrwaddr;//20
+                       // likely to change
+                       logic [4:0] i0rd; //8
+                       logic i0load; //3
+                       logic i0store;
+                       logic i0v;
+                       logic i0valid;
                        } el2_dest_pkt_t;
 
 typedef struct packed {
@@ -117,6 +121,31 @@ typedef struct packed {
 
 
 typedef struct packed {
+                       logic clz;
+                       logic ctz;
+                       logic pcnt;
+                       logic sext_b;
+                       logic sext_h;
+                       logic slo;
+                       logic sro;
+                       logic min;
+                       logic max;
+                       logic pack;
+                       logic packu;
+                       logic packh;
+                       logic rol;
+                       logic ror;
+                       logic grev;
+                       logic gorc;
+                       logic zbb;
+                       logic sbset;
+                       logic sbclr;
+                       logic sbinv;
+                       logic sbext;
+                       logic sh1add;
+                       logic sh2add;
+                       logic sh3add;
+                       logic zba;
                        logic land;
                        logic lor;
                        logic lxor;
@@ -140,6 +169,9 @@ typedef struct packed {
 
 typedef struct packed {
                        logic fast_int;
+/* verilator lint_off SYMRSVDWORD */
+                       logic stack;
+/* verilator lint_on SYMRSVDWORD */
                        logic by;
                        logic half;
                        logic word;
@@ -155,15 +187,61 @@ typedef struct packed {
                        } el2_lsu_pkt_t;
 
 typedef struct packed {
-                      logic exc_valid;
-                      logic single_ecc_error;
                       logic inst_type;   //0: Load, 1: Store
+                      //logic dma_valid;
                       logic exc_type;    //0: MisAligned, 1: Access Fault
                       logic [3:0] mscause;
                       logic [31:0] addr;
+                      logic single_ecc_error;
+                      logic exc_valid;
                       } el2_lsu_error_pkt_t;
 
 typedef struct packed {
+                       logic clz;
+                       logic ctz;
+                       logic pcnt;
+                       logic sext_b;
+                       logic sext_h;
+                       logic slo;
+                       logic sro;
+                       logic min;
+                       logic max;
+                       logic pack;
+                       logic packu;
+                       logic packh;
+                       logic rol;
+                       logic ror;
+                       logic grev;
+                       logic gorc;
+                       logic zbb;
+                       logic sbset;
+                       logic sbclr;
+                       logic sbinv;
+                       logic sbext;
+                       logic zbs;
+                       logic bext;
+                       logic bdep;
+                       logic zbe;
+                       logic clmul;
+                       logic clmulh;
+                       logic clmulr;
+                       logic zbc;
+                       logic shfl;
+                       logic unshfl;
+                       logic zbp;
+                       logic crc32_b;
+                       logic crc32_h;
+                       logic crc32_w;
+                       logic crc32c_b;
+                       logic crc32c_h;
+                       logic crc32c_w;
+                       logic zbr;
+                       logic bfp;
+                       logic zbf;
+                       logic sh1add;
+                       logic sh2add;
+                       logic sh3add;
+                       logic zba;
                        logic alu;
                        logic rs1;
                        logic rs2;
@@ -228,6 +306,7 @@ typedef struct packed {
                        logic clmulh;
                        logic clmulr;
                        logic grev;
+                       logic gorc;
                        logic shfl;
                        logic unshfl;
                        logic crc32_b;
